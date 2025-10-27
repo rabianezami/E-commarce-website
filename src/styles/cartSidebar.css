@@ -1,0 +1,146 @@
+/* حالت بسته */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  left: -400px;
+  width: 350px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s ease;
+  overflow-y: auto;
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+.app.dark .cart-sidebar {
+  background-color: var(--dark-card);
+}
+
+.cart-sidebar.open {
+  left: 0;
+}
+
+/* هدر سایدبار */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cart-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: var(--bg-color);
+  color: var(--dark-text) !important;
+  border-radius: 8px;
+}
+.app.dark .close-btn {
+  color: var(--dark-text) !important;
+}
+
+/* لیست آیتم‌ها */
+.cart-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cart-controls button {
+  background: #f0f0f0;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.app.dark .cart-controls button {
+   background: var(--dark-input);
+   color: var(--dark-text);
+}
+
+.cart-controls span {
+  min-width: 20px;
+  text-align: center;
+}
+
+/* فوتر سایدبار */
+.cart-footer {
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cart-footer span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn-card-fill {
+  background-color: var(--bg-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.btn-card-fill:hover,
+.btn-outline:hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--dark-text) !important;
+}
+
+.btn-outline {
+  border-color: var(--bg-color) !important;
+  color: var(--bg-color) !important;
+}
+
+.app.dark .btn-outline {
+  border-color: var(--dark-primary) !important;
+  color: var(--dark-text) !important;
+}
+
+/* موبایل: حالت بسته */
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 50%;
+    left: -100%; /* کاملاً خارج از صفحه */
+  }
+}

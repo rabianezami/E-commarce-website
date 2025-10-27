@@ -1,0 +1,9 @@
+
+.custom-footer {
+  background: #1d0136 !important;
+  color: white;
+}
+
+.app.dark .custom-footer {
+  background: var(--dark-section) !important;
+}

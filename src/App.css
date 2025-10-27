@@ -1,0 +1,37 @@
+/* =============================
+   Variables for easy customization
+============================= */
+:root {
+  --bg-color: #3B0270;
+  --bg-hover: #5503a2;
+  --card-radius: 10px;
+  --text-color: #121212;
+  --card-hover-radius: 25px;
+  --scroll-gap: 1rem;
+  --scroll-padding: 1rem 20px;
+  --dark-bg: #111827;
+  --dark-card: #1f2937;
+  --dark-text: #ffffff;
+  --dark-primary: #9D33FF;
+  --dark-section: #1B1F2B ;
+  --dark-input: #252f40;
+}
+
+
+.app {
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: all 0.3s ease;
+  
+}
+
+/* حالت تاریک */
+.app.dark {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  
+}
+
+.app.dark body {
+  background-color: #121212 !important;
+}

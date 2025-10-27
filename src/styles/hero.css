@@ -1,0 +1,51 @@
+.hero-section {
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  min-height: 100vh;   
+}
+
+.app.dark .hero-section {
+  background-color: var(--dark-section)!important;
+}
+
+.hero-section .container {
+  padding: 0 15px; /* فاصله از چپ و راست */
+}
+
+.hero-section h1 {
+  font-size: 1.8rem;          
+  max-width: 90%;  
+}
+
+.hero-section p {
+  font-size: 0.9rem;  
+  line-height: 1.4;  
+}
+
+.hero-image {
+  max-width: 50%; 
+  margin-top: 6rem;
+  height: 400px !important;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column; 
+  }
+
+  .hero-section h1 {
+    font-size: 1.7rem;  
+  }
+
+  .hero-section p {
+    font-size: 0.8rem;  
+  }
+
+  .hero-image {
+    max-width: 50%;     
+    margin-top: 70px;
+  }
+}

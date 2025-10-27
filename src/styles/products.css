@@ -1,0 +1,233 @@
+
+
+/* =============================
+   Scroll افقی صفحه اصلی
+============================= */
+.product-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  cursor: grab;
+
+  touch-action: pan-x;          /* فقط افقی حرکت کنه */
+  overscroll-behavior-x: contain; /* جلوگیری از back/forward مرورگر */
+  user-select: none;            /* جلوگیری از انتخاب متن */
+}
+
+.product-scroll-wrapper.dragging {
+  cursor: grabbing;
+}
+
+.product-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.product-scroll-grid {
+  display: flex;
+  gap: var(--scroll-gap);
+}
+
+.app.dark .card-body {
+  background: var(--dark-card);
+}
+
+.app.dark .card-body p {
+  color: var(--dark-text) !important;
+}
+
+.app.dark .price-product {
+  color: var(--dark-text) !important;
+  border-color: #555 !important;
+}
+
+.app.dark .btn-light {
+    background: #555 !important;
+}
+
+.app.dark .btn-light:hover {
+    filter: invert(1);
+}
+
+/* =============================
+   Grid صفحه دوم (صفحه محصولات)
+============================= */
+.product-grid.row {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  align-items: stretch;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* کارت هر محصول */
+.col-card {
+  width: 100%;
+  max-width: 320px;
+}
+
+/* کارت تصویر */
+.img-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--card-radius); 
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--card-radius);
+  transition: transform 0.3s ease, border-radius 0.3s ease;
+}
+
+.img-wrapper:hover .product-img {
+  transform: scale(1.05);
+  border-radius: var(--card-hover-radius);
+}
+
+/* =============================
+   دکمه‌ها
+============================= */
+.btn-card-fill {
+  background-color: var(--bg-color);
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-card-fill:hover {
+  background-color: var(--bg-hover);
+  color: white;
+}
+
+.quantity-box {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--bg-color);
+  border-radius: 20px;
+  padding: 3px 8px;
+}
+
+.quantity-box span {
+  color: white;
+}
+
+.btn-viewAll {
+  border-color: var(--bg-color);
+  color: var(--primary-color);
+  padding: 8px 80px;
+  transition: all 0.3s ease;
+}
+
+.app.dark .btn-viewAll {
+  border-color: var(--dark-primary);
+}
+
+.btn-viewAll:hover {
+  background-color: var(--bg-color);
+  color: white;
+}
+
+.btn-scroll {
+  background-color: #ddd;
+  border-radius: 50px;
+  padding: 6px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.app.dark .btn-scroll {
+  background-color: var(--dark-card);
+  color: var(--dark-text);
+}
+
+.btn-scroll:hover {
+  background-color: #c4c4c4;
+}
+
+.app.dark .btn-scroll:hover {
+  background-color: var(--bg-color);
+}
+
+.active-btn {
+  background-color: var(--bg-color) !important;
+  color: #fff !important;
+}
+
+/* =============================
+   ریسپانسیو مشترک
+============================= */
+@media (max-width: 576px) {
+  section.py-5.px-2.mx-2 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .product-grid.row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .col-card {
+    max-width: 100%;
+    justify-self: center;
+  }
+
+  .img-wrapper {
+    width: 100%;
+    aspect-ratio: 5/6;
+    max-width: 100%;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .product-grid.row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .product-img {
+    height: 220px;
+  }
+}
+
+@media (min-width: 992px) {
+  .product-grid.row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .img-wrapper {
+    aspect-ratio: 5/6;
+    height: auto;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+

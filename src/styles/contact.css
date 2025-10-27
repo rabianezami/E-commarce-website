@@ -1,0 +1,39 @@
+
+.app.dark .contact-section {
+   background: var(--dark-bg);
+}
+
+.app.dark .contact-form {
+  background-color: var(--dark-card) !important;
+  color: var(--dark-text);
+}
+
+.btn-gradient {
+  background: var(--bg-color) !important;
+  color: white !important;
+  border: none;
+}
+
+.btn-gradient:hover {
+  background: var(--bg-hover) !important;
+}
+
+.info-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(13, 110, 253, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app.dark .form-control,
+.app.dark .input-group-text {
+  background-color: var(--dark-input) !important;
+  color: var(--dark-text);
+}
+
+.app.dark .form-control::placeholder {
+  color: var(--dark-text);
+  opacity: 0.7;
+}
