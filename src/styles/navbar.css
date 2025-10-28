@@ -82,6 +82,10 @@ body, .app.dark {
   z-index: 1020;
 }
 
+.mobile-menu .nav-link:hover {
+  color: var(--bg-color) !important;
+}
+
 .mobile-menu-header {
   background-color: var(--bg-color);
 }
@@ -107,6 +111,7 @@ body, .app.dark {
 .hidden-when-mobile-open {
   display: none !important;
 }
+
 
 @media (max-width: 992px) {
   .glassNavbar {
