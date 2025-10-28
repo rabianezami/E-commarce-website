@@ -78,13 +78,13 @@ export default function Contact({ onSubmit }) {
 
   return (
     <section id="contact" className="contact-section py-5 mt-5">
-      <div className="container">
+      <div className="container mt-4">
         <div className="text-center text-lg-start">
           <h2 className="mb-4 contact-title fw-bold">Get In Touch</h2>
         </div>
 
         <div className="row g-4 justify-content-center">
-          <div className="col-md-6">
+          <div className="col-md-10">
             <div className="card contact-form bg-white p-4 shadow-md rounded-4 w-100">
               <form onSubmit={handleSubmit} noValidate className="p-4">
                 <div className="mb-4">
