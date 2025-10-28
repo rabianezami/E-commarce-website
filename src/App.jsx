@@ -11,6 +11,7 @@ import FavoritesPage from "./components/FavoritesPage";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
+import ProductDetail from "./components/ProductDetail";
 
 import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
 
@@ -51,6 +52,7 @@ function AppContent() {
             }
           />
           <Route path="/products/:category" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/FavoritesPage" element={<FavoritesPage />} />
           <Route path="/Contact" element={<Contact />} />
         </Routes>
