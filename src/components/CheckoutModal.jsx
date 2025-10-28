@@ -1,14 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Spinner } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
+import { ThemeContext } from "../context/ThemeContext";
+import "../styles/checkout.css";
 
 function CheckoutModal({ show, handleClose, products = [] }) {
   const { cart, setCart } = useContext(CartContext);
+  const { darkMode } = useContext(ThemeContext);
+
   const [formData, setFormData] = useState({ name: "", card: "", expiry: "" });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // 🔹 پاک کردن فرم و خطاها وقتی مودال باز می‌شود
   useEffect(() => {
     if (show) {
       setErrors({});
@@ -19,11 +22,7 @@ function CheckoutModal({ show, handleClose, products = [] }) {
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
-
-    // 🔹 پاک کردن خطا مربوط به فیلد هنگام تایپ
-    if (errors[id]) {
-      setErrors(prev => ({ ...prev, [id]: null }));
-    }
+    if (errors[id]) setErrors(prev => ({ ...prev, [id]: null }));
   };
 
   const handleSubmit = (e) => {
@@ -46,8 +45,6 @@ function CheckoutModal({ show, handleClose, products = [] }) {
     }
 
     setLoading(true);
-
-    // شبیه‌سازی پردازش پرداخت
     setTimeout(() => {
       alert("✅ Your order has been successfully placed!");
       setCart({});
@@ -65,18 +62,14 @@ function CheckoutModal({ show, handleClose, products = [] }) {
     return sum + price * cart[id];
   }, 0);
 
-  if (!cart || Object.keys(cart).length === 0) {
-    return null; // 🔹 اگر سبد خرید خالی است مودال نمایش داده نشود
-  }
+  if (!cart || Object.keys(cart).length === 0) return null;
 
   return (
     <Modal
       show={show}
-      onHide={() => {
-        setErrors({});
-        handleClose();
-      }}
+      onHide={() => { setErrors({}); handleClose(); }}
       centered
+      className={darkMode ? "dark-modal" : ""}
     >
       <Modal.Header closeButton>
         <Modal.Title>Checkout</Modal.Title>
@@ -137,7 +130,7 @@ function CheckoutModal({ show, handleClose, products = [] }) {
             <Form.Control.Feedback type="invalid">{errors.expiry}</Form.Control.Feedback>
           </Form.Group>
 
-          <Button type="submit" className="w-100 btn btn-primary" disabled={loading}>
+          <Button type="submit" className="w-100 btn-card-fill" disabled={loading}>
             {loading ? (
               <>
                 <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2" />
