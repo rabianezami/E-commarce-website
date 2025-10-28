@@ -32,6 +32,9 @@
   
 }
 
+body {
+  background: #fff !important;
+}
 .app.dark body {
-  background-color: #121212 !important;
+  background-color: #121212;
 }
