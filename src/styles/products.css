@@ -1,5 +1,4 @@
 
-
 /* =============================
    Scroll افقی صفحه اصلی
 ============================= */
@@ -103,8 +102,8 @@
    دکمه‌ها
 ============================= */
 .btn-card-fill {
-  background-color: var(--bg-color);
-  color: white;
+  background-color: var(--bg-color) !important;
+  color: white !important;
   transition: background-color 0.3s ease;
 }
 
