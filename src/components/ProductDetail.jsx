@@ -33,7 +33,7 @@ export default function ProductDetail() {
     <div className="product-detail-page container py-5">
       <Link to="/" className="btn btn-link mb-4">← Back to Home</Link>
 
-      <div className="row">
+      <div className="row mt-4">
         {/* تصویر محصول اصلی */}
         <div className="col-md-6 text-center mb-4 mb-md-0">
           <img 
