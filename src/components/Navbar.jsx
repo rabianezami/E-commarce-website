@@ -37,7 +37,7 @@ function Navbar() {
           {/* لوگو و برند */}
           <div className={`d-flex align-items-center gap-3 d-lg-flex ${mobileMenuOpen ? "d-none" : ""}`}>
             <a className="navbar-brand d-flex align-items-center gap-2" href="/">
-              <img src="./images/logo-shopping-2.jpg" alt="logo" width="40" height="40" />
+              <img src="./images/logo-light.svg.jpg" alt="logo" width="40" height="40" />
               Online Shopping
             </a>
             <div className="d-none d-lg-block">
