@@ -3,34 +3,35 @@ import "../styles/chatbot.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faPaperPlane, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function ChatbotAdvanced({ products = [] }) {
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("chatbotHistory");
-    return saved ? JSON.parse(saved) : [{ sender: "bot", text: "Hi! I can help you find products. Ask me anything." }];
+    return saved
+      ? JSON.parse(saved)
+      : [{ sender: "bot", type: "text", text: "Hi! I can help you find products. Ask me anything." }];
   });
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [step, setStep] = useState(null); // برای راهنمایی چند مرحله‌ای
   const listRef = useRef(null);
 
+  // ✅ scroll bottom + ذخیره امن فقط متن‌ها
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
-    localStorage.setItem("chatbotHistory", JSON.stringify(messages));
+    const safe = messages.map(m => (m.type === "cards" ? { ...m, cards: [] } : m));
+    localStorage.setItem("chatbotHistory", JSON.stringify(safe));
   }, [messages, open]);
 
   async function sendMessage() {
     const text = input.trim();
     if (!text) return;
-    const userMsg = { sender: "user", text };
-    setMessages(prev => [...prev, userMsg]);
+    setMessages(prev => [...prev, { sender: "user", type: "text", text }]);
     setInput("");
     setLoading(true);
 
     const productSummary =
-      products && products.length > 0
+      products.length > 0
         ? `Available products: ${products.slice(0, 8).map(p => `${p.title} (${p.category})`).join("; ")}`
         : "";
 
@@ -43,7 +44,7 @@ Prefer to suggest relevant products from the provided list if possible.
     const messagesForApi = [
       { role: "system", content: systemPrompt },
       ...(productSummary ? [{ role: "system", content: productSummary }] : []),
-      { role: "user", content: text }
+      { role: "user", content: text },
     ];
 
     try {
@@ -51,56 +52,46 @@ Prefer to suggest relevant products from the provided list if possible.
       const TIMEOUT = 20000;
       const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
 
-      // ⚡ درخواست به بک‌اند امن
-      const resp = await fetch("http://localhost:5000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: messagesForApi }),
-        signal: controller.signal
-      });
+      const baseURL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "";
+
+const resp = await fetch(`${baseURL}/api/chat`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ messages: messagesForApi }),
+ 
+});
+
 
       clearTimeout(timeoutId);
 
       if (!resp.ok) {
-        const textErr = await resp.text();
-        throw new Error(`OpenAI error: ${resp.status} ${textErr}`);
+        const txt = await resp.text();
+        throw new Error(`OpenAI error: ${resp.status} ${txt}`);
       }
 
       const data = await resp.json();
-      let reply = data.choices?.[0]?.message?.content?.trim() || "I have no answer.";
+      const reply = data.choices?.[0]?.message?.content?.trim() || "I have no answer.";
 
-      // اضافه کردن پیشنهاد محصولات به صورت کارت
+      // ✅ اگر پاسخ شامل suggest باشد، کارت‌ بساز
       if (products && reply.toLowerCase().includes("suggest")) {
-        const suggested = products.slice(0, 4).map(p => ({
-          title: p.title,
-          category: p.category,
-          price: p.price,
-          image: p.image,
-          href: p.href
-        }));
-        reply = (
-          <div>
-            <div>{reply}</div>
-            <div className="d-flex flex-wrap mt-2">
-              {suggested.map((p, idx) => (
-                <div key={idx} className="card m-1" style={{ width: 100 }}>
-                  <img src={p.image} className="card-img-top" alt={p.title} />
-                  <div className="card-body p-1">
-                    <p className="small mb-1">{p.title}</p>
-                    <p className="small mb-1">${p.price}</p>
-                    <a href={p.href} className="small btn btn-sm btn-primary w-100">View</a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+        const suggested = products.slice(0, 4);
+        setMessages(prev => [
+          ...prev,
+          { sender: "bot", type: "text", text: reply },
+          { sender: "bot", type: "cards", cards: suggested },
+        ]);
+      } else {
+        setMessages(prev => [...prev, { sender: "bot", type: "text", text: reply }]);
       }
-
-      setMessages(prev => [...prev, { sender: "bot", text: reply }]);
     } catch (err) {
       console.error("Chat error:", err);
-      setMessages(prev => [...prev, { sender: "bot", text: "Error connecting to AI service." }]);
+      setMessages(prev => [
+        ...prev,
+        { sender: "bot", type: "text", text: "Error connecting to AI service." },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -125,16 +116,45 @@ Prefer to suggest relevant products from the provided list if possible.
         <div className="chatbot-panel p-3 rounded shadow">
           <div className="chatbot-header d-flex justify-content-between align-items-center mb-2">
             <span>Online Support</span>
-            <button className="btn-close custom-close-btn />" onClick={() => setOpen(false)}>
-               <FontAwesomeIcon icon={faTimes} />
+            <button className="custom-close-btn" onClick={() => setOpen(false)}>
+              <FontAwesomeIcon icon={faTimes} />
             </button>
           </div>
 
-          <div ref={listRef} className="chatbot-messages mb-2" style={{ maxHeight: 300, overflowY: "auto" }}>
+          <div
+            ref={listRef}
+            className="chatbot-messages mb-2"
+            style={{ maxHeight: 300, overflowY: "auto" }}
+          >
             {messages.map((m, i) => (
               <div key={i} className={`mb-2 ${m.sender === "user" ? "text-end" : "text-start"}`}>
-                <div className={`d-inline-block p-2 rounded ${m.sender === "user" ? "user-message" : "bot-message"}`}>
-                  {m.text}
+                <div
+                  className={`d-inline-block p-2 rounded ${
+                    m.sender === "user" ? "user-message" : "bot-message"
+                  }`}
+                >
+                  {/* ✅ بر اساس نوع پیام */}
+                  {m.type === "text" && <span>{m.text}</span>}
+                  {m.type === "cards" && (
+                    <div className="d-flex flex-wrap mt-2">
+                      {m.cards.map((p, idx) => (
+                        <div key={idx} className="card m-1" style={{ width: 100 }}>
+                          <img src={p.image} className="card-img-top" alt={p.title} />
+                          <div className="card-body p-1">
+                            <p className="small mb-1">{p.title}</p>
+                            <p className="small mb-1">${p.price}</p>
+                            <a
+                              href={p.href}
+                              className="small btn btn-sm btn-primary w-100"
+                              target="_blank"
+                            >
+                              View
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
