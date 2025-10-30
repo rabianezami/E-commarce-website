@@ -1,7 +1,7 @@
 // ProductDetail.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getProducts } from "./ProductsWithDescription";
+import { getProducts } from "./productsWithDescription";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 import LoginModal from "./LoginModal"; // ✅ اضافه شد
