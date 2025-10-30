@@ -14,11 +14,13 @@ import Chatbot from "./components/Chatbot";
 import ProductDetail from "./components/ProductDetail";
 
 import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './styles/products.css';
+import './styles/modal.css';
 
 function AppContent() {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -72,9 +74,13 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+
+   <AuthProvider>
+     <ThemeProvider>
+       <AppContent />
+     </ThemeProvider>
+   </AuthProvider>
+ 
   );
 }
 
