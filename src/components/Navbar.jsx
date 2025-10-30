@@ -25,7 +25,7 @@ function Navbar() {
 
   const { cart } = useContext(CartContext);
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { requireAuth, AuthModal } = useAuthModal();
   const { confirmLogout, LogoutModalWrapper } = useLogoutModal();
@@ -40,7 +40,7 @@ function Navbar() {
     { icon: faUser, id: "navbar-user-btn" },
   ];
 
-  // کوچک و تمیز: پیام موقتی Toast
+  // Toast Message
   const showToastMsg = (msg, ms = 2000) => {
     setToast(msg);
     setTimeout(() => setToast(null), ms);
@@ -120,7 +120,6 @@ function Navbar() {
                 </button>
               )
             )}
-           
           </div>
 
           {/* دکمه‌های موبایل */}
@@ -140,35 +139,54 @@ function Navbar() {
           </div>
         </div>
 
-        {/* منوی موبایل */}
+        {/* ✅ منوی موبایل با لینک Home */}
         {mobileMenuOpen && (
           <div className="mobile-menu d-lg-none shadow-sm rounded mt-2 bg-white">
             <div className="mobile-menu-header d-flex justify-content-between align-items-center p-3 border-bottom">
-              <button className="btn btn-outline-secondary" onClick={() => {
-                if (user) confirmLogout();
-                else requireAuth(() => {});
-              }}>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  if (user) confirmLogout();
+                  else requireAuth(() => {});
+                }}
+              >
                 <FontAwesomeIcon icon={faUser} />
               </button>
-              <button className="btn btn-outline-secondary" onClick={() => setMobileMenuOpen(false)}>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <FontAwesomeIcon icon={faX} />
               </button>
             </div>
+
             <ul className="list-unstyled mb-0 mt-2 px-3">
+              {/* 🔹 لینک Home اضافه شد */}
+              <li>
+                <Link to="/" className="nav-link py-2">
+                  Home
+                </Link>
+              </li>
+
               {links.map((l, i) => (
                 <li key={i}>
-                  <Link to={l.href} className="nav-link py-2">{l.label}</Link>
+                  <Link to={l.href} className="nav-link py-2">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
+
               <li>
-                <Link to="/FavoritesPage" className="nav-link py-2">Favorites</Link>
+                <Link to="/FavoritesPage" className="nav-link py-2">
+                  Favorites
+                </Link>
               </li>
             </ul>
           </div>
         )}
       </nav>
 
-      {/* سایدبار کارت */}
+      {/* ✅ سایدبار کارت */}
       <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
