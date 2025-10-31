@@ -3,6 +3,7 @@ import { ProductCard } from "./ProductCard";
 import { enableDrag } from "./dragScroll";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom"; 
 
 export function ProductsBase({ category = "all", layout = "scroll" }) {
   const [products, setProducts] = useState([]);
@@ -80,14 +81,12 @@ export function ProductsBase({ category = "all", layout = "scroll" }) {
 
       {layout === "scroll" && (
         <div className="text-center mt-3">
-          <a
-            href={"/products/" + category}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-viewAll"
-          >
-            View All
-          </a>
+         <Link
+           to={"/products/" + category}
+           className="btn btn-viewAll"
+         >
+           View All
+         </Link>
         </div>
       )}
     </section>
