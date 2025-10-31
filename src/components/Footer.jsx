@@ -1,5 +1,6 @@
 // Footer.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faLinkedin, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -12,11 +13,11 @@ const footerData = {
     text: "We are dedicated to providing top-notch client and invoice management solutions to freelancers worldwide."
   },
   links: [
-    { label: "All Products", href: "/Products/all" },
-    { label: "Men", href: "/Products/men" },
-    { label: "Women", href: "/Products/women" },
-    { label: "Kides", href: "/Products/kids" },
-    { label: "Contact", href: "/Contact" },
+    { label: "All Products", href: "/products/all" },
+    { label: "Men", href: "/products/men" },
+    { label: "Women", href: "/products/women" },
+    { label: "Kids", href: "/products/kids" },
+    { label: "Contact", href: "/contact" },
   ],
   contact: {
     email: "support@onlineshop.com",
@@ -47,7 +48,13 @@ export default function Footer({ data = footerData }) {
             <h5 className="mb-3 quick-links">Quick Links</h5>
             <ul className="list-unstyled small">
               {data.links.map((link, idx) => (
-                <li key={idx}><a href={link.href} className="text-white">{link.label}</a></li>
+                <li key={idx}>
+                  {link.href.startsWith("/products") || link.href.startsWith("/contact") ? (
+                    <Link to={link.href} className="text-white">{link.label}</Link>
+                  ) : (
+                    <a href={link.href} className="text-white">{link.label}</a>
+                  )}
+                </li>
               ))}
             </ul>
           </div>
@@ -65,7 +72,7 @@ export default function Footer({ data = footerData }) {
             </p>
             <div>
               {data.contact.socials.map((social, idx) => (
-                <a key={idx} href={social.href} className="text-light me-3 fs-4 footer-link">
+                <a key={idx} href={social.href} className="text-light me-3 fs-4 footer-link" target="_blank" rel="noopener noreferrer">
                   <FontAwesomeIcon icon={social.icon} />
                 </a>
               ))}
