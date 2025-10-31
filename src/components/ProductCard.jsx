@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import LoginModal from "./LoginModal"; // ✅ اضافه شد
+import LoginModal from "./LoginModal"; 
 import { Link } from "react-router-dom";
 
 export function ProductCard({ p, layout = "grid" }) {
