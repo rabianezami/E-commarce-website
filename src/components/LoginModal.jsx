@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import ReactDOM from "react-dom";
 import { AuthContext } from "../context/AuthContext";
 
 export default function LoginModal({ show, onClose }) {
@@ -27,7 +28,8 @@ export default function LoginModal({ show, onClose }) {
     }
   };
 
-  return (
+  // ✅ محتوا را در body رندر می‌کنیم تا زیر چیزی نماند
+  return ReactDOM.createPortal(
     <div className="modal-backdrop">
       <div className="modal-content p-4 rounded shadow">
         <h5 className="text-center mb-2">
@@ -38,6 +40,7 @@ export default function LoginModal({ show, onClose }) {
             ? "Join us today for a seamless and secure shopping experience."
             : "Please login to access your account and continue shopping securely."}
         </p>
+
         <form onSubmit={handleSubmit} autoComplete="off">
           <input
             name="login_user_xyz"
@@ -80,17 +83,23 @@ export default function LoginModal({ show, onClose }) {
 
       <style>{`
         .modal-backdrop {
-          position: fixed; top:0; left:0; right:0; bottom:0;
-          background: rgba(0,0,0,0.6);
-          display: flex; justify-content: center; align-items: center;
-          z-index: 1050;
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0, 0, 0, 0.6);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999; /* بالاتر از همه */
         }
         .modal-content {
           background: white;
           width: 100%;
           max-width: 400px;
+          position: relative;
+          z-index: 10000;
         }
       `}</style>
-    </div>
+    </div>,
+    document.body //  پورتال: رندر در بدنهٔ اصلی صفحه
   );
 }
