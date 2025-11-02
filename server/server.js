@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:5176" // پورت فرانت‌اند تو
+  origin: "http://localhost:5173" // پورت فرانت‌اند تو
 }));
 
 app.use(express.json());
